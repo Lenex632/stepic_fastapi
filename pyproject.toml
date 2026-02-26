@@ -12,3 +12,15 @@ dependencies = [
     "sqlalchemy>=2.0.46",
     "uvicorn[standard]>=0.41.0",
 ]
+
+
+[project.scripts]
+main = "app:main"
+
+[build-system]
+requires = ["uv_build"]
+build-backend = "uv_build"
+
+[tool.uv.build-backend]
+module-root = ""
+module-name = "app"
