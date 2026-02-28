@@ -43,6 +43,7 @@ async def create_product(product: ProductCreate, db: AsyncSession = Depends(get_
     db_product = ProductModel(**product.model_dump())
     db.add(db_product)
     await db.commit()
+    await db.refresh(db_product)
     return db_product
 
 
@@ -115,7 +116,7 @@ async def update_product(product_id: int, product: ProductCreate, db: AsyncSessi
         .values(**product.model_dump())
     )
     await db.commit()
-    db.refresh(db_product)
+    await db.refresh(db_product)
     return db_product
 
 
@@ -132,6 +133,5 @@ async def delete_product(product_id: int, db: AsyncSession = Depends(get_async_d
 
     await db.execute(update(ProductModel).where(ProductModel.id == product_id).values(is_active=False))
     await db.commit()
-
     return {"status": "success", "message": "Product marked as inactive"}
 
