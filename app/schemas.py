@@ -57,7 +57,13 @@ class Product(BaseModel):
 class UserCreate(BaseModel):
     email: EmailStr = Field(description="Email пользователя")
     password: str = Field(min_length=8, description="Пароль (минимум 8 символов)")
-    role: str = Field(default="buyer", pattern="^(buyer|seller)$", description="Роль: 'buyer' или 'seller'")
+    # WARN: а как защитить этот эндпойнт создания пользователя,
+    # если обычный пользователь захочет создать пользователя-администратора?
+    role: str = Field(
+        default="buyer",
+        pattern="^(buyer|seller|admin)$",
+        description="Роль: 'admin', 'buyer' или 'seller'"
+    )
 
 
 class User(BaseModel):
