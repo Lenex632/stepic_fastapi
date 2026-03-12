@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from pydantic import BaseModel, Field, ConfigDict, EmailStr
 from decimal import Decimal
 
@@ -48,6 +50,7 @@ class Product(BaseModel):
     price: Decimal = Field(..., description="Цена товара в рублях", gt=0, decimal_places=2)
     image_url: str | None = Field(None, description="URL изображения товара")
     stock: int = Field(..., description="Количество товара на складе")
+    raiting: Decimal = Field(..., description="Рейтинг товара", ge=0, decimal_places=2)
     category_id: int = Field(..., description="ID категории")
     is_active: bool = Field(..., description="Активность товара")
 
@@ -57,13 +60,7 @@ class Product(BaseModel):
 class UserCreate(BaseModel):
     email: EmailStr = Field(description="Email пользователя")
     password: str = Field(min_length=8, description="Пароль (минимум 8 символов)")
-    # WARN: а как защитить этот эндпойнт создания пользователя,
-    # если обычный пользователь захочет создать пользователя-администратора?
-    role: str = Field(
-        default="buyer",
-        pattern="^(buyer|seller|admin)$",
-        description="Роль: 'admin', 'buyer' или 'seller'"
-    )
+    role: str = Field(default="buyer", pattern="^(buyer|seller)$", description="Роль: 'admin', 'buyer' или 'seller'")
 
 
 class User(BaseModel):
@@ -77,4 +74,22 @@ class User(BaseModel):
 
 class RefreshTokenRequest(BaseModel):
     refresh_token: str
+
+
+class ReviewCreate(BaseModel):
+    product_id: int
+    comment: str | None = Field(None, max_length=500)
+    grade: int = Field(ge=1, le=5)
+
+
+class Review(BaseModel):
+    id: int
+    user_id: int
+    product_id: int
+    comment: str | None = Field(None, max_length=500)
+    comment_date: datetime
+    grade: int = Field(ge=1, le=5)
+    is_active: bool
+
+    model_config = ConfigDict(from_attributes=True)
 

@@ -6,7 +6,8 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from app.models.products import Product as ProductModel
 from app.models.categories import Category as CategoryModel
 from app.models.users import User as UserModel
-from app.schemas import Product as ProductSchema, ProductCreate
+from app.models.reviews import Review as ReviewModel
+from app.schemas import Product as ProductSchema, ProductCreate, Review as ReviewSchema
 from app.db_depends import get_db, get_async_db
 from app.auth import get_current_seller
 
@@ -154,4 +155,25 @@ async def delete_product(
     await db.commit()
     await db.refresh(product)
     return {"status": "success", "message": "Product marked as inactive"}
+
+
+@router.get("/{product_id}/reviews", response_model=list[ReviewSchema])
+async def get_product_reviews(product_id: int, db: AsyncSession = Depends(get_async_db)):
+    """
+    Получение списка всех отзывов, определённого товара.
+    """
+    product_request = await db.scalars(select(ProductModel).where(
+        ProductModel.id == product_id,
+        ProductModel.is_active.is_(True)
+    ))
+    product = product_request.first()
+    if product is None:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Product not found")
+
+    request = await db.scalars(select(ReviewModel).where(
+        ReviewModel.product_id == product_id,
+        ReviewModel.is_active.is_(True)
+    ))
+    result = request.all()
+    return result
 
