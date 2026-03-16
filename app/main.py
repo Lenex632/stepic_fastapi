@@ -5,11 +5,11 @@ from fastapi.staticfiles import StaticFiles
 
 from app.routers import categories, products, users, reviews, cart, orders
 
-
 app = FastAPI(
     title="Тестовый интернет магазин",
     version="0.1.0"
 )
+app.mount("/media", StaticFiles(directory="app/media"), name="media")
 
 app.include_router(categories.router)
 app.include_router(products.router)
