@@ -28,9 +28,9 @@ async def update_product_results(db: AsyncSession, product_id: int):
             ReviewModel.is_active.is_(True)
         )
     )
-    avg_raiting = result.scalar() or 0.0
+    avg_rating = result.scalar() or 0.0
     product = await db.get(ProductModel, product_id)
-    product.raiting = avg_raiting
+    product.rating = avg_rating
     await db.commit()
 
 

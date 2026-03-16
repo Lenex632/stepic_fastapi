@@ -19,7 +19,7 @@ class Product(Base):
     is_active: Mapped[bool] = mapped_column(Boolean, default=True)
     category_id: Mapped[int] = mapped_column(ForeignKey("categories.id"), nullable=False)
     seller_id: Mapped[int] = mapped_column(ForeignKey("users.id"), nullable=False)
-    raiting: Mapped[Decimal] = mapped_column(Numeric(10, 2), default=0.0, server_default=text("0"))
+    rating: Mapped[Decimal] = mapped_column(Numeric(10, 2), default=0.0, server_default=text("0"))
 
     tsv: Mapped[TSVECTOR] = mapped_column(
         TSVECTOR,
@@ -36,6 +36,11 @@ class Product(Base):
 
     category: Mapped["Category"] = relationship("Category", back_populates="products")
     seller: Mapped["User"] = relationship("User", back_populates="products")
+    cart_items: Mapped[list["CartItem"]] = relationship(
+        "CartItem",
+        back_populates="product",
+        cascade="all, delete-orphan"
+    )
 
     __table_args__ = Index("ix_products_tsv_gin", "tsv", postgresql_using="gin"),
 
