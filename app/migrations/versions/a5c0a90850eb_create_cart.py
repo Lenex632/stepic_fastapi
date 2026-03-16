@@ -37,8 +37,6 @@ def upgrade() -> None:
     op.create_index(op.f('ix_cart_items_user_id'), 'cart_items', ['user_id'], unique=False)
     op.add_column('products', sa.Column('rating', sa.Numeric(precision=10, scale=2), server_default=sa.text('0'), nullable=False))
     op.drop_column('products', 'raiting')
-    op.drop_column('reviews', 'comment_date')
-    op.add_column('reviews', sa.Column('comment_date', sa.DateTime(), server_default=sa.text('now()'), nullable=False))
     # ### end Alembic commands ###
 
 
