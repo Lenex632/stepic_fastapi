@@ -1,0 +1,16 @@
+2026-03-17 11:10:33.572 | INFO     | logging_main:main_page:13 - Hello from the root path
+2026-03-17 11:10:33.572 | INFO     | logging_main:main_page:13 - Hello from the root path
+2026-03-17 11:10:33.572 | INFO     | logging_main:hello_world:19 - hello() called!
+2026-03-17 11:10:33.572 | INFO     | logging_main:hello_world:19 - hello() called!
+2026-03-17 11:13:09.755 | INFO     | logging_main:main_page:13 - Hello from the root path
+2026-03-17 11:13:09.755 | INFO     | logging_main:main_page:13 - Hello from the root path
+2026-03-17 11:13:09.755 | INFO     | logging_main:hello_world:19 - hello() called!
+2026-03-17 11:13:09.755 | INFO     | logging_main:hello_world:19 - hello() called!
+2026-03-17 11:13:14.765 | INFO     | logging_main:main_page:13 - Hello from the root path
+2026-03-17 11:13:14.765 | INFO     | logging_main:main_page:13 - Hello from the root path
+2026-03-17 11:13:14.765 | INFO     | logging_main:hello_world:19 - hello() called!
+2026-03-17 11:13:14.765 | INFO     | logging_main:hello_world:19 - hello() called!
+2026-03-17 11:13:19.180 | INFO     | logging_main:main_page:13 - Hello from the root path
+2026-03-17 11:13:19.180 | INFO     | logging_main:main_page:13 - Hello from the root path
+2026-03-17 11:13:19.180 | INFO     | logging_main:hello_world:19 - hello() called!
+2026-03-17 11:13:19.180 | INFO     | logging_main:hello_world:19 - hello() called!
